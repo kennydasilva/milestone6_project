@@ -25,3 +25,11 @@ class NoticationlistCreateController(APIView):
         response =NotifictionResponseDTO(notification)
 
         return Response(response.data, status=status.HTTP_201_CREATED)
+
+
+class NotificationMarkAsSentController(APIView):
+
+    def patch(self, request, id):
+        notifiction=NotificationService.mark_as_sent(id)
+        serializer=NotifictionResponseDTO(notifiction)
+        return Response(serializer.data)
