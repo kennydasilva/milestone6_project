@@ -1,6 +1,11 @@
 from django.urls import path
-from .views import healt_check
+from api.views.notification_controller import (
+    NoticationlistCreateController,
+    NotificationMarkAsSentController
+)
 
 urlpatterns=[
-    path('healt/', healt_check),
+    path('notifications/', NoticationlistCreateController.as_view()),
+    path('notifications/<int:pk>/send/', NotificationMarkAsSentController.as_view()),
+
 ]

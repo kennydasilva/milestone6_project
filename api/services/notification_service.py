@@ -4,19 +4,46 @@ class NotificationService:
 
     @staticmethod
     def create_notification(data):
-        return Notification.objects.create(**data)
+
+        try:
+
+            return Notification.objects.create(**data)
+        except e:
+            raise Exception("Error: {e}")
+        
+    
     
 
     @staticmethod
     def list_notifications(filters=None):
-        qs=Notification.objects.all()
-        if filters:
-            qs=qs.filter(**filters)
-        return qs
+
+        try:
+            qs=Notification.objects.all()
+            if filters:
+                qs=qs.filter(**filters)
+            return qs
+        
+        except e:
+            raise Exception("Error: {e}")
+    
     
     @staticmethod
     def mark_as_sent(notification_id):
-        notification=Notification.objects.get(id=notification_id)
-        notification.is_sent=True
-        notification.save()
-        return notification
+        try:
+            notification=Notification.objects.get(id=notification_id)
+            notification.is_sent=True
+            notification.save()
+            return notification
+        
+        except e:
+            raise Exception("Error: {e}")
+
+
+    @staticmethod
+    def remove_notifications(notification_id):
+        try:
+            return Notification.objects.delete(id=notification_id)
+
+            
+        except e:
+            raise Exception("Error: {e}")

@@ -25,6 +25,11 @@ class NoticationlistCreateController(APIView):
         response =NotifictionResponseDTO(notification)
 
         return Response(response.data, status=status.HTTP_201_CREATED)
+    
+    def delete(self, request, id):
+        notifiction=NotificationService.remove_notifications(id)
+        serializer=NotifictionResponseDTO(notifiction)
+        return Response(serializer.data)
 
 
 class NotificationMarkAsSentController(APIView):
