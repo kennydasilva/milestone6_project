@@ -35,15 +35,33 @@ class NotificationService:
             notification.save()
             return notification
         
-        except e:
-            raise Exception("Error: {e}")
+        except objectDoesNotExist:
+            return None
+        
 
 
     @staticmethod
     def remove_notifications(notification_id):
         try:
-            return Notification.objects.delete(id=notification_id)
+            notification=Notification.objects.get(id=notification_id)
+            notification.delete()
+            return True
 
-            
-        except e:
-            raise Exception("Error: {e}")
+        except objectDoesNotExist:
+            return False
+
+
+    @staticmethod
+    def update(notification_id, data):
+        try:
+            notification=Notification.objects.get(id=notification_id)
+
+        except objectDoesNotExist:
+            return None
+        
+        for field, value in data.items():
+            setattr(Notification, field, value)
+
+        notification.save()
+        return notification
+        
