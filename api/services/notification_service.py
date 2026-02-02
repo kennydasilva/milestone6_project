@@ -1,4 +1,5 @@
 from api.models import Notification
+from django.core.exceptions import ObjectDoesNotExist
 
 class NotificationService:
 
@@ -8,8 +9,8 @@ class NotificationService:
         try:
 
             return Notification.objects.create(**data)
-        except e:
-            raise Exception("Error: {e}")
+        except ObjectDoesNotExist:
+            return None
         
     
     
@@ -23,8 +24,8 @@ class NotificationService:
                 qs=qs.filter(**filters)
             return qs
         
-        except e:
-            raise Exception("Error: {e}")
+        except ObjectDoesNotExist:
+            return None
     
     
     @staticmethod
@@ -35,7 +36,7 @@ class NotificationService:
             notification.save()
             return notification
         
-        except objectDoesNotExist:
+        except ObjectDoesNotExist:
             return None
         
 
@@ -47,7 +48,7 @@ class NotificationService:
             notification.delete()
             return True
 
-        except objectDoesNotExist:
+        except ObjectDoesNotExist:
             return False
 
 
@@ -56,7 +57,7 @@ class NotificationService:
         try:
             notification=Notification.objects.get(id=notification_id)
 
-        except objectDoesNotExist:
+        except ObjectDoesNotExist:
             return None
         
         for field, value in data.items():
