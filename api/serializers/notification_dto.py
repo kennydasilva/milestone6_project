@@ -16,3 +16,4 @@ class NotificationUpdateDTO(serializers.Serializer):
     message=serializers.CharField(required=False)
     email=serializers.EmailField(required=False)
     is_sent=serializers.BooleanField(required=False)
+
